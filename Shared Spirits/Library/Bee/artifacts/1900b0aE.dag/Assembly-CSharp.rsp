@@ -390,7 +390,6 @@
 "Assets/CollegeStudent/Demo/DemoCollegeStudentController.cs"
 "Assets/Scripts/EncounterScript.cs"
 "Assets/Scripts/GameManager.cs"
-"Assets/Scripts/Interactable.cs"
 "Assets/Scripts/InventoryScripts/Inventory.cs"
 "Assets/Scripts/InventoryScripts/InventoryManager.cs"
 "Assets/Scripts/Items/HoldItems.cs"
@@ -400,9 +399,13 @@
 "Assets/Scripts/Items/Medicine.cs"
 "Assets/Scripts/Items/Shard.cs"
 "Assets/Scripts/OverworldBattleScript.cs"
-"Assets/Scripts/Pickup.cs"
 "Assets/Scripts/PlayerController.cs"
-"Assets/Scripts/SpiritInventory.cs"
+"Assets/Scripts/SpiritPickUp.cs"
+"Assets/Scripts/Spirits/Spirit.cs"
+"Assets/Scripts/Spirits/SpiritInInventory.cs"
+"Assets/Scripts/Spirits/SpiritInventory.cs"
+"Assets/Scripts/Spirits/SpiritList.cs"
+"Assets/Scripts/SpiritsInBattleList.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 

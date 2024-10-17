@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[CreateAssetMenu(fileName = "New Shard", menuName = "Inventory/Shard")]
 public class Shard : Item
 {
-    public Shard(string name, string desc, Sprite itemIcon, int qty)
-        : base(name, desc, itemIcon, qty)
-    {
-    }
+    [SerializeField] int captureRate;
+    //idk
 }
 

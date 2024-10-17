@@ -5,15 +5,24 @@ using UnityEngine;
 [System.Serializable]
 public class Inventory
 {
-    public List<Item> items = new List<Item>();
+    public List<ItemSlot> items;
+}
 
-    public void AddItem(Item item)
+public class ItemSlot
+{
+    public Item item;
+    public int count;
+
+    public Item Item => item;
+    public int Count => count;
+
+    public void AddToCount(int amount)
     {
-        items.Add(item);
+        count += amount;
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveFromCount(int amount)
     {
-        items.Remove(item);
+        count = Mathf.Max(0, count - amount);
     }
 }

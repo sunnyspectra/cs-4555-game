@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Inventory player1Inventory;
-    public Inventory player2Inventory;
+    public Inventory playerInventory;
 }

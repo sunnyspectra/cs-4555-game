@@ -65,16 +65,19 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\OverworldBattleScript.cs" />
     <Compile Include="Assets\Scripts\Items\ItemPickup.cs" />
-    <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Spirits\SpiritInInventory.cs" />
     <Compile Include="Assets\Scripts\Items\LearnableMove.cs" />
-    <Compile Include="Assets\Scripts\SpiritInventory.cs" />
     <Compile Include="Assets\Scripts\Items\Shard.cs" />
-    <Compile Include="Assets\Scripts\Pickup.cs" />
+    <Compile Include="Assets\Scripts\SpiritPickUp.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InventoryScripts\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Spirits\Spirit.cs" />
+    <Compile Include="Assets\Scripts\Spirits\SpiritList.cs" />
     <Compile Include="Assets\CollegeStudent\Demo\DemoCollegeStudentController.cs" />
+    <Compile Include="Assets\Scripts\Spirits\SpiritInventory.cs" />
     <Compile Include="Assets\Scripts\InventoryScripts\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\SpiritsInBattleList.cs" />
     <Compile Include="Assets\Scripts\Items\HoldItems.cs" />
   </ItemGroup>
   <ItemGroup>

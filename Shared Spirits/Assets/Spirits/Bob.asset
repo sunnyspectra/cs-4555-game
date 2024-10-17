@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e32d189d5a773445a403358379c841a, type: 3}
+  m_Name: Bob
+  m_EditorClassIdentifier: 
+  name: Bob
+  type1: Fire
+  type2: Electruc
+  icon: {fileID: 647482847140245397, guid: 389d2366e1db64147aa81dd92ed3e4dd, type: 3}
+  HPmax: 300
+  attack: 500
+  defense: 100
+  specialAttack: 100
+  specialDefense: 100
+  speed: 100
+  stage: 1
