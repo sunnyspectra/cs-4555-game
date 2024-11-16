@@ -60,24 +60,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Data\ConditionsDB.cs" />
+    <Compile Include="Assets\Scripts\Battle\PartyScreen.cs" />
+    <Compile Include="Assets\Scripts\Battle\PartyMemberUI.cs" />
     <Compile Include="Assets\Scripts\Data\MoveDB.cs" />
+    <Compile Include="Assets\Scripts\Battle\MoveSelectionUI.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleHud.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\Inventory\UI\ItemSlotUI.cs" />
+    <Compile Include="Assets\Scripts\Battle\HPBar.cs" />
     <Compile Include="Assets\Scripts\Spirits\MoveBase.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\Inventory\UI\InventoryUI.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleUnit.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemGiver.cs" />
     <Compile Include="Assets\Scripts\Data\SpiritDB.cs" />
     <Compile Include="Assets\Scripts\Inventory\Pickup.cs" />
     <Compile Include="Assets\Scripts\Spirits\Move.cs" />
-    <Compile Include="Assets\Scripts\Inventory\EvolutionItem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\LearnableMoveItem.cs" />
+    <Compile Include="Assets\Scripts\Util\ScriptableObjectDB.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleSystem.cs" />
     <Compile Include="Assets\Scripts\Inventory\Shard.cs" />
     <Compile Include="Assets\Scripts\Spirits\SpiritBase.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuController.cs" />
     <Compile Include="Assets\Scripts\Inventory\RecoveryItem.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Spirits\Spirit.cs" />
-    <Compile Include="Assets\Scripts\Inventory\LearnableMoveITem.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleAction.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleDialogBox.cs" />
     <Compile Include="Assets\Scripts\Inventory\ItemBase.cs" />
     <Compile Include="Assets\CollegeStudent\Demo\DemoCollegeStudentController.cs" />
     <Compile Include="Assets\Scripts\Spirits\Condition.cs" />

@@ -23,8 +23,6 @@ public class SpiritBase : ScriptableObject
     [SerializeField] List<LearnableMove> learnableMoves;
     [SerializeField] List<MoveBase> learnableByItems;
 
-    [SerializeField] List<Evolution> evolutions;
-
     public static int MaxNumOfMoves { get; set; } = 4;
 
     public string Name {
@@ -81,7 +79,6 @@ public class SpiritBase : ScriptableObject
 
     public List<MoveBase> LearnableByItems => learnableByItems;
     
-    public List<Evolution> Evolutions => evolutions;
 
 }
 
@@ -98,18 +95,6 @@ public class LearnableMove
     public int Level {
         get { return level; }
     }
-}
-
-[System.Serializable]
-public class Evolution
-{
-    [SerializeField] SpiritBase evolvesInto;
-    [SerializeField] int requiredLevel;
-    [SerializeField] EvolutionItem requiredItem;
-
-    public SpiritBase EvolvesInto => evolvesInto;
-    public int RequiredLevel => requiredLevel;
-    public EvolutionItem RequiredItem => requiredItem;
 }
 
 public enum SpiritType

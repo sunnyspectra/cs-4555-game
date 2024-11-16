@@ -198,22 +198,6 @@ public class Spirit
         return Moves.Count(m => m.Base == moveToCheck) > 0;
     }
 
-    public Evolution CheckForEvolution()
-    {
-        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel <= level);
-    }
-
-    public Evolution CheckForEvolution(ItemBase item)
-    {
-        return Base.Evolutions.FirstOrDefault(e => e.RequiredItem == item);
-    }
-
-    public void Evolve(Evolution evolution)
-    {
-        _base = evolution.EvolvesInto;
-        CalculateStats();
-    }
-
     public void Heal()
     {
         HP = MaxHp;

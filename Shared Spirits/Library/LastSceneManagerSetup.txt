@@ -1,8 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Route 2.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
 - path: Assets/Scenes/Route 1.unity
   isLoaded: 1
   isActive: 1
