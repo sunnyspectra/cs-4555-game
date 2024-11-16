@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     private Animator anim;
     private Vector3 localScale;
-    private InventoryManager inventoryManager;
+    //private InventoryManager inventoryManager;
 
     void Start()
     {

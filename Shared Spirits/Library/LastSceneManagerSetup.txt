@@ -1,49 +1,9 @@
 sceneSetups:
 - path: Assets/Scenes/Route 2.unity
   isLoaded: 1
-  isActive: 1
+  isActive: 0
   isSubScene: 0
 - path: Assets/Scenes/Route 1.unity
   isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 3.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 4.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 5.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 6.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 7.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 8.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 9.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 11.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 10.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/Scenes/Route 12.unity
-  isLoaded: 1
-  isActive: 0
+  isActive: 1
   isSubScene: 0
