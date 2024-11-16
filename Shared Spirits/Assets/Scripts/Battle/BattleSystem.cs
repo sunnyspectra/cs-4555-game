@@ -47,7 +47,7 @@ public class BattleSystem : MonoBehaviour
 
     bool isTrainerBattle = false;
     PlayerController player;
-    TrainerController trainer;
+    HandlerController trainer;
 
     int escapeAttempts;
     MoveBase moveToLearn;
@@ -66,7 +66,7 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(SetupBattle());
     }
 
-    public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty,
+    public void StartTrainerBattle(SpiritParty playerParty, SpiritParty trainerParty,
         int unitCount = 2)
     {
         this.playerParty = playerParty;
@@ -74,7 +74,7 @@ public class BattleSystem : MonoBehaviour
 
         isTrainerBattle = true;
         player = playerParty.GetComponent<PlayerController>();
-        trainer = trainerParty.GetComponent<TrainerController>();
+        trainer = trainerParty.GetComponent<HandlerController>();
 
         this.unitCount = unitCount;
 
@@ -106,12 +106,12 @@ public class BattleSystem : MonoBehaviour
 
         if (!isTrainerBattle)
         {
-            // Wild Pokemon Battle
-            playerUnits[0].Setup(playerParty.GetHealthyPokemon());
-            enemyUnits[0].Setup(wildPokemon);
+            // Wild Spirit Battle
+            playerUnits[0].Setup(playerParty.GetHealthySpirit());
+            enemyUnits[0].Setup(wildSpirit);
 
-            dialogBox.SetMoveNames(playerUnits[0].Pokemon.Moves);
-            yield return dialogBox.TypeDialog($"A wild {enemyUnits[0].Pokemon.Base.Name} appeared.");
+            dialogBox.SetMoveNames(playerUnits[0].Spirit.Moves);
+            yield return dialogBox.TypeDialog($"A wild {enemyUnits[0].Spirit.Base.Name} appeared.");
         }
         else
         {
@@ -131,30 +131,30 @@ public class BattleSystem : MonoBehaviour
 
             yield return dialogBox.TypeDialog($"{trainer.Name} wants to battle");
 
-            // Send out first pokemon of the trainer
+            // Send out first Spirit of the trainer
             trainerImage.gameObject.SetActive(false);
-            var enemyPokemons = trainerParty.GetHealthyPokemons(unitCount);
+            var enemySpirits = trainerParty.GetHealthySpirits(unitCount);
 
             for (int i = 0; i < unitCount; i++)
             {
                 enemyUnits[i].gameObject.SetActive(true);
-                enemyUnits[i].Setup(enemyPokemons[i]);
+                enemyUnits[i].Setup(enemySpirits[i]);
             }
 
-            string names = String.Join(" and ", enemyPokemons.Select(p => p.Base.Name));
+            string names = String.Join(" and ", enemySpirits.Select(p => p.Base.Name));
             yield return dialogBox.TypeDialog($"{trainer.Name} send out {names}");
 
-            // Send out first pokemon of the player
+            // Send out first Spirit of the player
             playerImage.gameObject.SetActive(false);
-            var playerPokemons = playerParty.GetHealthyPokemons(unitCount);
+            var playerSpirits = playerParty.GetHealthySpirits(unitCount);
 
             for (int i = 0; i < unitCount; i++)
             {
                 playerUnits[i].gameObject.SetActive(true);
-                playerUnits[i].Setup(playerPokemons[i]);
+                playerUnits[i].Setup(playerSpirits[i]);
             }
 
-            names = String.Join(" and ", playerPokemons.Select(p => p.Base.Name));
+            names = String.Join(" and ", playerSpirits.Select(p => p.Base.Name));
             yield return dialogBox.TypeDialog($"Go {names}!");
         }
 
@@ -168,7 +168,7 @@ public class BattleSystem : MonoBehaviour
     void BattleOver(bool won)
     {
         state = BattleState.BattleOver;
-        playerParty.Pokemons.ForEach(p => p.OnBattleOver());
+        playerParty.Spirits.ForEach(p => p.OnBattleOver());
 
         playerUnits.ForEach(u => u.Hud.ClearData());
         enemyUnits.ForEach(u => u.Hud.ClearData());
@@ -183,9 +183,9 @@ public class BattleSystem : MonoBehaviour
         this.actionIndex = actionIndex;
         currentUnit = playerUnits[actionIndex];
 
-        dialogBox.SetMoveNames(currentUnit.Pokemon.Moves);
+        dialogBox.SetMoveNames(currentUnit.Spirit.Moves);
 
-        dialogBox.SetDialog($"Choose an action for {currentUnit.Pokemon.Base.Name}");
+        dialogBox.SetDialog($"Choose an action for {currentUnit.Spirit.Base.Name}");
         dialogBox.EnableActionSelector(true);
     }
 
@@ -216,21 +216,21 @@ public class BattleSystem : MonoBehaviour
         currentTarget = 0;
     }
 
-    IEnumerator AboutToUse(Pokemon newPokemon)
+    IEnumerator AboutToUse(Spirit newSpirit)
     {
         state = BattleState.Busy;
-        yield return dialogBox.TypeDialog($"{trainer.Name} is about to use {newPokemon.Base.Name}. Do you want to change pokemon?");
+        yield return dialogBox.TypeDialog($"{trainer.Name} is about to use {newSpirit.Base.Name}. Do you want to change Spirit?");
 
         state = BattleState.AboutToUse;
         dialogBox.EnableChoiceBox(true);
     }
 
-    IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
+    IEnumerator ChooseMoveToForget(Spirit Spirit, MoveBase newMove)
     {
         state = BattleState.Busy;
         yield return dialogBox.TypeDialog($"Choose a move you wan't to forget");
         moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.Base).ToList(), newMove);
+        moveSelectionUI.SetMoveData(Spirit.Moves.Select(x => x.Base).ToList(), newMove);
         moveToLearn = newMove;
 
         state = BattleState.MoveToForget;
@@ -251,14 +251,14 @@ public class BattleSystem : MonoBehaviour
                     Type = ActionType.Move,
                     User = enemyUnit,
                     Target = playerUnits[UnityEngine.Random.Range(0, playerUnits.Count)],
-                    Move = enemyUnit.Pokemon.GetRandomMove()
+                    Move = enemyUnit.Spirit.GetRandomMove()
                 };
                 actions.Add(randAction);
             }
 
             // Sort Actions
             actions = actions.OrderByDescending(a => a.Priority)
-                .ThenByDescending(a => a.User.Pokemon.Speed).ToList();
+                .ThenByDescending(a => a.User.Spirit.Speed).ToList();
 
             StartCoroutine(RunTurns());
         }
@@ -283,10 +283,10 @@ public class BattleSystem : MonoBehaviour
                 yield return RunAfterTurn(action.User);
                 if (state == BattleState.BattleOver) yield break;
             }
-            else if (action.Type == ActionType.SwitchPokemon)
+            else if (action.Type == ActionType.SwitchSpirit)
             {
                 state = BattleState.Busy;
-                yield return SwitchPokemon(action.User, action.SelectedPokemon);
+                yield return SwitchSpirit(action.User, action.SelectedSpirit);
             }
             else if (action.Type == ActionType.UseItem)
             {
@@ -310,19 +310,19 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
     {
-        bool canRunMove = sourceUnit.Pokemon.OnBeforeMove();
+        bool canRunMove = sourceUnit.Spirit.OnBeforeMove();
         if (!canRunMove)
         {
-            yield return ShowStatusChanges(sourceUnit.Pokemon);
+            yield return ShowStatusChanges(sourceUnit.Spirit);
             yield return sourceUnit.Hud.WaitForHPUpdate();
             yield break;
         }
-        yield return ShowStatusChanges(sourceUnit.Pokemon);
+        yield return ShowStatusChanges(sourceUnit.Spirit);
 
         move.PP--;
-        yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.Name} used {move.Base.Name}");
+        yield return dialogBox.TypeDialog($"{sourceUnit.Spirit.Base.Name} used {move.Base.Name}");
 
-        if (CheckIfMoveHits(move, sourceUnit.Pokemon, targetUnit.Pokemon))
+        if (CheckIfMoveHits(move, sourceUnit.Spirit, targetUnit.Spirit))
         {
 
             sourceUnit.PlayAttackAnimation();
@@ -331,38 +331,38 @@ public class BattleSystem : MonoBehaviour
 
             if (move.Base.Category == MoveCategory.Status)
             {
-                yield return RunMoveEffects(move.Base.Effects, sourceUnit.Pokemon, targetUnit.Pokemon, move.Base.Target);
+                yield return RunMoveEffects(move.Base.Effects, sourceUnit.Spirit, targetUnit.Spirit, move.Base.Target);
             }
             else
             {
-                var damageDetails = targetUnit.Pokemon.TakeDamage(move, sourceUnit.Pokemon);
+                var damageDetails = targetUnit.Spirit.TakeDamage(move, sourceUnit.Spirit);
                 yield return targetUnit.Hud.WaitForHPUpdate();
                 yield return ShowDamageDetails(damageDetails);
             }
 
-            if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targetUnit.Pokemon.HP > 0)
+            if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targetUnit.Spirit.HP > 0)
             {
                 foreach (var secondary in move.Base.Secondaries)
                 {
                     var rnd = UnityEngine.Random.Range(1, 101);
                     if (rnd <= secondary.Chance)
-                        yield return RunMoveEffects(secondary, sourceUnit.Pokemon, targetUnit.Pokemon, secondary.Target);
+                        yield return RunMoveEffects(secondary, sourceUnit.Spirit, targetUnit.Spirit, secondary.Target);
                 }
             }
 
-            if (targetUnit.Pokemon.HP <= 0)
+            if (targetUnit.Spirit.HP <= 0)
             {
-                yield return HandlePokemonFainted(targetUnit);
+                yield return HandleSpiritFainted(targetUnit);
             }
 
         }
         else
         {
-            yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.Name}'s attack missed");
+            yield return dialogBox.TypeDialog($"{sourceUnit.Spirit.Base.Name}'s attack missed");
         }
     }
 
-    IEnumerator RunMoveEffects(MoveEffects effects, Pokemon source, Pokemon target, MoveTarget moveTarget)
+    IEnumerator RunMoveEffects(MoveEffects effects, Spirit source, Spirit target, MoveTarget moveTarget)
     {
         // Stat Boosting
         if (effects.Boosts != null)
@@ -394,18 +394,18 @@ public class BattleSystem : MonoBehaviour
         if (state == BattleState.BattleOver) yield break;
         yield return new WaitUntil(() => state == BattleState.RunningTurn);
 
-        // Statuses like burn or psn will hurt the pokemon after the turn
-        sourceUnit.Pokemon.OnAfterTurn();
-        yield return ShowStatusChanges(sourceUnit.Pokemon);
+        // Statuses like burn or psn will hurt the Spirit after the turn
+        sourceUnit.Spirit.OnAfterTurn();
+        yield return ShowStatusChanges(sourceUnit.Spirit);
         yield return sourceUnit.Hud.WaitForHPUpdate();
-        if (sourceUnit.Pokemon.HP <= 0)
+        if (sourceUnit.Spirit.HP <= 0)
         {
-            yield return HandlePokemonFainted(sourceUnit);
+            yield return HandleSpiritFainted(sourceUnit);
             yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }
 
-    bool CheckIfMoveHits(Move move, Pokemon source, Pokemon target)
+    bool CheckIfMoveHits(Move move, Spirit source, Spirit target)
     {
         if (move.Base.AlwaysHits)
             return true;
@@ -430,18 +430,18 @@ public class BattleSystem : MonoBehaviour
         return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
     }
 
-    IEnumerator ShowStatusChanges(Pokemon pokemon)
+    IEnumerator ShowStatusChanges(Spirit Spirit)
     {
-        while (pokemon.StatusChanges.Count > 0)
+        while (Spirit.StatusChanges.Count > 0)
         {
-            var message = pokemon.StatusChanges.Dequeue();
+            var message = Spirit.StatusChanges.Dequeue();
             yield return dialogBox.TypeDialog(message);
         }
     }
 
-    IEnumerator HandlePokemonFainted(BattleUnit faintedUnit)
+    IEnumerator HandleSpiritFainted(BattleUnit faintedUnit)
     {
-        yield return dialogBox.TypeDialog($"{faintedUnit.Pokemon.Base.Name} Fainted");
+        yield return dialogBox.TypeDialog($"{faintedUnit.Spirit.Base.Name} Fainted");
         faintedUnit.PlayFaintAnimation();
         yield return new WaitForSeconds(2f);
 
@@ -455,8 +455,8 @@ public class BattleSystem : MonoBehaviour
         if (!faintedUnit.IsPlayerUnit)
         {
             // Exp Gain
-            int expYield = faintedUnit.Pokemon.Base.ExpYield;
-            int enemyLevel = faintedUnit.Pokemon.Level;
+            int expYield = faintedUnit.Spirit.Base.ExpYield;
+            int enemyLevel = faintedUnit.Spirit.Level;
             float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
 
             int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / (7 * unitCount));
@@ -465,32 +465,32 @@ public class BattleSystem : MonoBehaviour
             {
                 var playerUnit = playerUnits[i];
 
-                playerUnit.Pokemon.Exp += expGain;
-                yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} gained {expGain} exp");
+                playerUnit.Spirit.Exp += expGain;
+                yield return dialogBox.TypeDialog($"{playerUnit.Spirit.Base.Name} gained {expGain} exp");
                 yield return playerUnit.Hud.SetExpSmooth();
 
                 // Check Level Up
-                while (playerUnit.Pokemon.CheckForLevelUp())
+                while (playerUnit.Spirit.CheckForLevelUp())
                 {
                     playerUnit.Hud.SetLevel();
-                    yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} grew to level {playerUnit.Pokemon.Level}");
+                    yield return dialogBox.TypeDialog($"{playerUnit.Spirit.Base.Name} grew to level {playerUnit.Spirit.Level}");
 
                     // Try to learn a new Move
-                    var newMove = playerUnit.Pokemon.GetLearnableMoveAtCurrLevel();
+                    var newMove = playerUnit.Spirit.GetLearnableMoveAtCurrLevel();
                     if (newMove != null)
                     {
-                        if (playerUnit.Pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
+                        if (playerUnit.Spirit.Moves.Count < SpiritBase.MaxNumOfMoves)
                         {
-                            playerUnit.Pokemon.LearnMove(newMove.Base);
-                            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} learned {newMove.Base.Name}");
-                            dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+                            playerUnit.Spirit.LearnMove(newMove.Base);
+                            yield return dialogBox.TypeDialog($"{playerUnit.Spirit.Base.Name} learned {newMove.Base.Name}");
+                            dialogBox.SetMoveNames(playerUnit.Spirit.Moves);
                         }
                         else
                         {
                             unitTryingToLearn = playerUnit;
-                            yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} trying to learn {newMove.Base.Name}");
-                            yield return dialogBox.TypeDialog($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves");
-                            yield return ChooseMoveToForget(playerUnit.Pokemon, newMove.Base);
+                            yield return dialogBox.TypeDialog($"{playerUnit.Spirit.Base.Name} trying to learn {newMove.Base.Name}");
+                            yield return dialogBox.TypeDialog($"But it cannot learn more than {SpiritBase.MaxNumOfMoves} moves");
+                            yield return ChooseMoveToForget(playerUnit.Spirit, newMove.Base);
                             yield return new WaitUntil(() => state != BattleState.MoveToForget);
                             yield return new WaitForSeconds(2f);
                         }
@@ -507,29 +507,29 @@ public class BattleSystem : MonoBehaviour
 
     void NextStepsAfterFainting(BattleUnit faintedUnit)
     {
-        // Remove the action of fainted pokemon
+        // Remove the action of fainted Spirit
         var actionToRemove = actions.FirstOrDefault(a => a.User == faintedUnit);
         if (actionToRemove != null)
             actionToRemove.IsInvalid = true;
 
         if (faintedUnit.IsPlayerUnit)
         {
-            var activePokemons = playerUnits.Select(u => u.Pokemon).Where(p => p.HP > 0).ToList();
-            var nextPokemon = playerParty.GetHealthyPokemon(activePokemons);
+            var activeSpirits = playerUnits.Select(u => u.Spirit).Where(p => p.HP > 0).ToList();
+            var nextSpirit = playerParty.GetHealthySpirit(activeSpirits);
 
-            if (activePokemons.Count == 0 && nextPokemon == null)
+            if (activeSpirits.Count == 0 && nextSpirit == null)
             {
                 BattleOver(false);
             }
-            else if (nextPokemon != null)
+            else if (nextSpirit != null)
             {
-                // Send out next pokemon
+                // Send out next Spirit
                 unitToSwitch = faintedUnit;
                 OpenPartyScreen();
             }
-            else if (nextPokemon == null && activePokemons.Count > 0)
+            else if (nextSpirit == null && activeSpirits.Count > 0)
             {
-                // No pokemon left to send out but we can stil continue the battle
+                // No Spirit left to send out but we can stil continue the battle
                 playerUnits.Remove(faintedUnit);
                 faintedUnit.Hud.gameObject.SetActive(false);
 
@@ -546,26 +546,26 @@ public class BattleSystem : MonoBehaviour
                 return;
             }
 
-            var activePokemons = enemyUnits.Select(u => u.Pokemon).Where(p => p.HP > 0).ToList();
-            var nextPokemon = trainerParty.GetHealthyPokemon(activePokemons);
+            var activeSpirits = enemyUnits.Select(u => u.Spirit).Where(p => p.HP > 0).ToList();
+            var nextSpirit = trainerParty.GetHealthySpirit(activeSpirits);
 
-            if (activePokemons.Count == 0 && nextPokemon == null)
+            if (activeSpirits.Count == 0 && nextSpirit == null)
             {
                 BattleOver(true);
             }
-            else if (nextPokemon != null)
+            else if (nextSpirit != null)
             {
-                // Send out next pokemon
+                // Send out next Spirit
                 unitToSwitch = faintedUnit;
 
                 if (unitCount == 1)
-                    StartCoroutine(AboutToUse(nextPokemon));
+                    StartCoroutine(AboutToUse(nextSpirit));
                 else
-                    StartCoroutine(SendNextTrainerPokemon());
+                    StartCoroutine(SendNextTrainerSpirit());
             }
-            else if (nextPokemon == null && activePokemons.Count > 0)
+            else if (nextSpirit == null && activeSpirits.Count > 0)
             {
-                // No pokemon left to send out but we can stil continue the battle
+                // No Spirit left to send out but we can stil continue the battle
                 enemyUnits.Remove(faintedUnit);
                 faintedUnit.Hud.gameObject.SetActive(false);
 
@@ -629,18 +629,18 @@ public class BattleSystem : MonoBehaviour
             Action<int> onMoveSelected = (moveIndex) =>
             {
                 moveSelectionUI.gameObject.SetActive(false);
-                if (moveIndex == PokemonBase.MaxNumOfMoves)
+                if (moveIndex == SpiritBase.MaxNumOfMoves)
                 {
                     // Don't learn the new move
-                    StartCoroutine(dialogBox.TypeDialog($"{unitTryingToLearn.Pokemon.Base.Name} did not learn {moveToLearn.Name}"));
+                    StartCoroutine(dialogBox.TypeDialog($"{unitTryingToLearn.Spirit.Base.Name} did not learn {moveToLearn.Name}"));
                 }
                 else
                 {
                     // Forget the selected move and learn new move
-                    var selectedMove = unitTryingToLearn.Pokemon.Moves[moveIndex].Base;
-                    StartCoroutine(dialogBox.TypeDialog($"{unitTryingToLearn.Pokemon.Base.Name} forgot {selectedMove.Name} and learned {moveToLearn.Name}"));
+                    var selectedMove = unitTryingToLearn.Spirit.Moves[moveIndex].Base;
+                    StartCoroutine(dialogBox.TypeDialog($"{unitTryingToLearn.Spirit.Base.Name} forgot {selectedMove.Name} and learned {moveToLearn.Name}"));
 
-                    unitTryingToLearn.Pokemon.Moves[moveIndex] = new Move(moveToLearn);
+                    unitTryingToLearn.Spirit.Moves[moveIndex] = new Move(moveToLearn);
                 }
 
                 moveToLearn = null;
@@ -681,7 +681,7 @@ public class BattleSystem : MonoBehaviour
             }
             else if (currentAction == 2)
             {
-                // Pokemon
+                // Spirit
                 OpenPartyScreen();
             }
             else if (currentAction == 3)
@@ -708,13 +708,13 @@ public class BattleSystem : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.UpArrow))
             currentMove -= 2;
 
-        currentMove = Mathf.Clamp(currentMove, 0, currentUnit.Pokemon.Moves.Count - 1);
+        currentMove = Mathf.Clamp(currentMove, 0, currentUnit.Spirit.Moves.Count - 1);
 
-        dialogBox.UpdateMoveSelection(currentMove, currentUnit.Pokemon.Moves[currentMove]);
+        dialogBox.UpdateMoveSelection(currentMove, currentUnit.Spirit.Moves[currentMove]);
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            var move = currentUnit.Pokemon.Moves[currentMove];
+            var move = currentUnit.Spirit.Moves[currentMove];
             if (move.PP == 0) return;
 
             dialogBox.EnableMoveSelector(false);
@@ -767,7 +767,7 @@ public class BattleSystem : MonoBehaviour
                 Type = ActionType.Move,
                 User = currentUnit,
                 Target = enemyUnits[currentTarget],
-                Move = currentUnit.Pokemon.Moves[currentMove]
+                Move = currentUnit.Spirit.Moves[currentMove]
             };
             AddBattleAction(action);
         }
@@ -785,12 +785,12 @@ public class BattleSystem : MonoBehaviour
             var selectedMember = partyScreen.SelectedMember;
             if (selectedMember.HP <= 0)
             {
-                partyScreen.SetMessageText("You can't send out a fainted pokemon");
+                partyScreen.SetMessageText("You can't send out a fainted Spirit");
                 return;
             }
-            if (playerUnits.Any(p => p.Pokemon == selectedMember))
+            if (playerUnits.Any(p => p.Spirit == selectedMember))
             {
-                partyScreen.SetMessageText("You can't switch with an active pokemon");
+                partyScreen.SetMessageText("You can't switch with an active Spirit");
                 return;
             }
 
@@ -800,9 +800,9 @@ public class BattleSystem : MonoBehaviour
             {
                 var action = new BattleAction()
                 {
-                    Type = ActionType.SwitchPokemon,
+                    Type = ActionType.SwitchSpirit,
                     User = currentUnit,
-                    SelectedPokemon = selectedMember
+                    SelectedSpirit = selectedMember
                 };
                 AddBattleAction(action);
             }
@@ -810,7 +810,7 @@ public class BattleSystem : MonoBehaviour
             {
                 state = BattleState.Busy;
                 bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
-                StartCoroutine(SwitchPokemon(unitToSwitch, selectedMember, isTrainerAboutToUse));
+                StartCoroutine(SwitchSpirit(unitToSwitch, selectedMember, isTrainerAboutToUse));
                 unitToSwitch = null;
             }
 
@@ -819,9 +819,9 @@ public class BattleSystem : MonoBehaviour
 
         Action onBack = () =>
         {
-            if (playerUnits.Any(u => u.Pokemon.HP <= 0))
+            if (playerUnits.Any(u => u.Spirit.HP <= 0))
             {
-                partyScreen.SetMessageText("You have to choose a pokemon to continue");
+                partyScreen.SetMessageText("You have to choose a Spirit to continue");
                 return;
             }
 
@@ -829,7 +829,7 @@ public class BattleSystem : MonoBehaviour
 
             if (partyScreen.CalledFrom == BattleState.AboutToUse)
             {
-                StartCoroutine(SendNextTrainerPokemon());
+                StartCoroutine(SendNextTrainerSpirit());
             }
             else
                 ActionSelection(actionIndex);
@@ -858,45 +858,45 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 // No Option
-                StartCoroutine(SendNextTrainerPokemon());
+                StartCoroutine(SendNextTrainerSpirit());
             }
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             dialogBox.EnableChoiceBox(false);
-            StartCoroutine(SendNextTrainerPokemon());
+            StartCoroutine(SendNextTrainerSpirit());
         }
     }
 
-    IEnumerator SwitchPokemon(BattleUnit unitToSwitch, Pokemon newPokemon, bool isTrainerAboutToUse = false)
+    IEnumerator SwitchSpirit(BattleUnit unitToSwitch, Spirit newSpirit, bool isTrainerAboutToUse = false)
     {
-        if (unitToSwitch.Pokemon.HP > 0)
+        if (unitToSwitch.Spirit.HP > 0)
         {
-            yield return dialogBox.TypeDialog($"Come back {unitToSwitch.Pokemon.Base.Name}");
+            yield return dialogBox.TypeDialog($"Come back {unitToSwitch.Spirit.Base.Name}");
             unitToSwitch.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
 
-        unitToSwitch.Setup(newPokemon);
-        dialogBox.SetMoveNames(newPokemon.Moves);
-        yield return dialogBox.TypeDialog($"Go {newPokemon.Base.Name}!");
+        unitToSwitch.Setup(newSpirit);
+        dialogBox.SetMoveNames(newSpirit.Moves);
+        yield return dialogBox.TypeDialog($"Go {newSpirit.Base.Name}!");
 
         if (isTrainerAboutToUse)
-            StartCoroutine(SendNextTrainerPokemon());
+            StartCoroutine(SendNextTrainerSpirit());
         else
             state = BattleState.RunningTurn;
     }
 
-    IEnumerator SendNextTrainerPokemon()
+    IEnumerator SendNextTrainerSpirit()
     {
         state = BattleState.Busy;
 
-        var faintedUnit = enemyUnits.First(u => u.Pokemon.HP == 0);
+        var faintedUnit = enemyUnits.First(u => u.Spirit.HP == 0);
 
-        var activePokemons = enemyUnits.Select(u => u.Pokemon).Where(p => p.HP > 0).ToList();
-        var nextPokemon = trainerParty.GetHealthyPokemon(activePokemons);
-        faintedUnit.Setup(nextPokemon);
-        yield return dialogBox.TypeDialog($"{trainer.Name} send out {nextPokemon.Base.Name}!");
+        var activeSpirits = enemyUnits.Select(u => u.Spirit).Where(p => p.HP > 0).ToList();
+        var nextSpirit = trainerParty.GetHealthySpirit(activeSpirits);
+        faintedUnit.Setup(nextSpirit);
+        yield return dialogBox.TypeDialog($"{trainer.Name} send out {nextSpirit.Base.Name}!");
 
         state = BattleState.RunningTurn;
     }
@@ -906,9 +906,9 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
         inventoryUI.gameObject.SetActive(false);
 
-        if (usedItem is PokeballItem)
+        if (usedItem is ShardItem)
         {
-            yield return ThrowPokeball((PokeballItem)usedItem);
+            yield return ThrowPokeball((ShardItem)usedItem);
         }
 
         var action = new BattleAction()
@@ -919,13 +919,13 @@ public class BattleSystem : MonoBehaviour
         AddBattleAction(action);
     }
 
-    IEnumerator ThrowPokeball(PokeballItem pokeballItem)
+    IEnumerator ThrowPokeball(ShardItem shardItem)
     {
         state = BattleState.Busy;
 
         if (isTrainerBattle)
         {
-            yield return dialogBox.TypeDialog($"You can't steal the trainers pokemon!");
+            yield return dialogBox.TypeDialog($"You can't steal the trainers Spirit!");
             state = BattleState.RunningTurn;
             yield break;
         }
@@ -933,18 +933,18 @@ public class BattleSystem : MonoBehaviour
         var playerUnit = playerUnits[0];
         var enemyUnit = enemyUnits[0];
 
-        yield return dialogBox.TypeDialog($"{player.Name} used {pokeballItem.Name.ToUpper()}!");
+        yield return dialogBox.TypeDialog($"{player.Name} used {shardItem.Name.ToUpper()}!");
 
         var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(2, 0), Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
-        pokeball.sprite = pokeballItem.Icon;
+        pokeball.sprite = shardItem.Icon;
 
         // Animations
         yield return pokeball.transform.DOJump(enemyUnit.transform.position + new Vector3(0, 2), 2f, 1, 1f).WaitForCompletion();
         yield return enemyUnit.PlayCaptureAnimation();
         yield return pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 1.3f, 0.5f).WaitForCompletion();
 
-        int shakeCount = TryToCatchPokemon(enemyUnit.Pokemon, pokeballItem);
+        int shakeCount = TryToCatchSpirit(enemyUnit.Spirit, shardItem);
 
         for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
         {
@@ -954,25 +954,25 @@ public class BattleSystem : MonoBehaviour
 
         if (shakeCount == 4)
         {
-            // Pokemon is caught
-            yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} was caught");
+            // Spirit is caught
+            yield return dialogBox.TypeDialog($"{enemyUnit.Spirit.Base.Name} was caught");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
 
-            playerParty.AddPokemon(enemyUnit.Pokemon);
-            yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} has been added to your party");
+            playerParty.AddSpirit(enemyUnit.Spirit);
+            yield return dialogBox.TypeDialog($"{enemyUnit.Spirit.Base.Name} has been added to your party");
 
             Destroy(pokeball);
             BattleOver(true);
         }
         else
         {
-            // Pokemon broke out
+            // Spirit broke out
             yield return new WaitForSeconds(1f);
             pokeball.DOFade(0, 0.2f);
             yield return enemyUnit.PlayBreakOutAnimation();
 
             if (shakeCount < 2)
-                yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} broke free");
+                yield return dialogBox.TypeDialog($"{enemyUnit.Spirit.Base.Name} broke free");
             else
                 yield return dialogBox.TypeDialog($"Almost caught it");
 
@@ -981,9 +981,9 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    int TryToCatchPokemon(Pokemon pokemon, PokeballItem pokeballItem)
+    int TryToCatchSpirit(Spirit Spirit, ShardItem shardItem)
     {
-        float a = (3 * pokemon.MaxHp - 2 * pokemon.HP) * pokemon.Base.CatchRate * pokeballItem.CatchRateModifier * ConditionsDB.GetStatusBonus(pokemon.Status) / (3 * pokemon.MaxHp);
+        float a = (3 * Spirit.MaxHp - 2 * Spirit.HP) * Spirit.Base.CatchRate * shardItem.CatchRateModifier * ConditionsDB.GetStatusBonus(Spirit.Status) / (3 * Spirit.MaxHp);
 
         if (a >= 255)
             return 4;
@@ -1015,8 +1015,8 @@ public class BattleSystem : MonoBehaviour
 
         ++escapeAttempts;
 
-        int playerSpeed = playerUnits[0].Pokemon.Speed;
-        int enemySpeed = enemyUnits[0].Pokemon.Speed;
+        int playerSpeed = playerUnits[0].Spirit.Speed;
+        int enemySpeed = enemyUnits[0].Spirit.Speed;
 
         if (enemySpeed < playerSpeed)
         {
