@@ -8,7 +8,7 @@ public enum GameState { FreeRoam, Battle, Dialog, Menu, PartyScreen, Bag, Cutsce
 public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
-    [SerializeField] PlayerController playerController2;
+    [SerializeField] PlayerController2 playerController2;
 
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] PartyScreen partyScreen;
@@ -93,6 +93,9 @@ public class GameController : MonoBehaviour
     HandlerController handler;
     public void StartHandlerBattle(HandlerController handler)
     {
+        //this is where it freezes
+
+        Debug.Log($"Interaction runs here");
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         //worldCamera.gameObject.SetActive(false);
@@ -115,6 +118,7 @@ public class GameController : MonoBehaviour
         if (state == GameState.FreeRoam)
         {
             playerController.HandleUpdate();
+            playerController2.HandleUpdate();
 
             if (Input.GetKeyDown(KeyCode.Return))
             {

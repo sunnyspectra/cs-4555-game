@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController2 : MonoBehaviour
 {
-    private Player1Controls control;
 
     Sprite sprite;
     public float speed2;                // Movement speed
@@ -44,7 +43,7 @@ public class PlayerController2 : MonoBehaviour
     public void HandleUpdate()
     {
         Vector2 input = player2Controls.Player2.Move2.ReadValue<Vector2>();
-
+        
         // Set movement direction (normalized)
         movementVector2 = new Vector3(input.x, 0, input.y).normalized;
 
@@ -61,7 +60,7 @@ public class PlayerController2 : MonoBehaviour
 
         //character.HandleUpdate();
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.N))
             StartCoroutine(Interact());
     }
 
@@ -81,12 +80,22 @@ public class PlayerController2 : MonoBehaviour
 
     IEnumerator Interact()
     {
-        Collider collider = GetComponent<Collider>();
-        if (collider != null)
+        // Check for objects within a small radius
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.5f); // Adjust radius if necessary
+
+        foreach (var collider in colliders)
         {
-            yield return collider.GetComponent<Interactable>()?.Interact(transform);
+            // Try to get the Interactable component
+            var interactable = collider.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                Debug.Log($"Interacting with {collider.gameObject.name}");
+                yield return interactable.Interact(transform); // Trigger the interaction
+                yield break; // Stop checking after finding one interactable
+            }
         }
 
+        Debug.LogWarning("No Interactable component found nearby.");
     }
 
     /*public object CaptureState()

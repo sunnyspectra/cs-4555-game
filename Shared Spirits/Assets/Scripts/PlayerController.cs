@@ -75,13 +75,24 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Interact()
     {
-        Collider collider = GetComponent<Collider>();
-        if (collider != null)
+        // Check for objects within a small radius
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.5f); // Adjust radius if necessary
+
+        foreach (var collider in colliders)
         {
-            yield return collider.GetComponent<Interactable>()?.Interact(transform);
+            // Try to get the Interactable component
+            var interactable = collider.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                Debug.Log($"Interacting with {collider.gameObject.name}");
+                yield return interactable.Interact(transform); // Trigger the interaction
+                yield break; // Stop checking after finding one interactable
+            }
         }
 
+        Debug.LogWarning("No Interactable component found nearby.");
     }
+
 
     /*public object CaptureState()
     {
