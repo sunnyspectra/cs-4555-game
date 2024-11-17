@@ -13,7 +13,6 @@ public class Shard : ItemBase
 
     public override bool CanUseOutsideBattle => false;
 
-    public float CatchRateModifier => catchRateModfier;
 }
 
 

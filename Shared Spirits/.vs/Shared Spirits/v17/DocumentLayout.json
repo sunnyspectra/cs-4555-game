@@ -3,40 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleSystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Battle\\BattleSystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\PlayerController2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\PlayerController2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Spirits\\SpiritBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Spirits\\SpiritBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\PlayerController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\PlayerController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Spirits\\Spirit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Spirits\\Spirit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Character\\HandlerController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Character\\HandlerController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\PartyScreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Battle\\PartyScreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleUnit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Battle\\BattleUnit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleAction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Battle\\BattleAction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleHud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Battle\\BattleHud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\PartyMemberUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Battle\\PartyMemberUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Inventory\\UI\\InventoryUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Inventory\\UI\\InventoryUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Character\\Character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Character\\Character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,117 +26,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Spirit.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Spirits\\Spirit.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Spirits\\Spirit.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Spirits\\Spirit.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Spirits\\Spirit.cs",
-              "ViewState": "AQIAALgAAAAAAAAAAAAAwMcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:32:43.65Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SpiritBase.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Spirits\\SpiritBase.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Spirits\\SpiritBase.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Spirits\\SpiritBase.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Spirits\\SpiritBase.cs",
-              "ViewState": "AQIAAC0AAAAAAAAAAIBJwBcAAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:31:38.43Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BattleAction.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleAction.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Battle\\BattleAction.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleAction.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Battle\\BattleAction.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:25:49.218Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BattleUnit.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleUnit.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Battle\\BattleUnit.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleUnit.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Battle\\BattleUnit.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAjwCkAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:25:39.803Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BattleSystem.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleSystem.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Battle\\BattleSystem.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleSystem.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Battle\\BattleSystem.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAADwvxgAAAAAAAAA",
+              "Title": "PlayerController2.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\PlayerController2.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController2.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\PlayerController2.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerController2.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAAHEAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:25:29.127Z",
+              "WhenOpened": "2024-11-17T05:44:15.744Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BattleHud.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleHud.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Battle\\BattleHud.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\BattleHud.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Battle\\BattleHud.cs",
-              "ViewState": "AQIAAFAAAAAAAAAAAAAjwHUAAAATAAAA",
+              "DocumentIndex": 2,
+              "Title": "HandlerController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Character\\HandlerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Character\\HandlerController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Character\\HandlerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Character\\HandlerController.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAiwCUAAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:22:45.557Z"
+              "WhenOpened": "2024-11-17T05:39:01.627Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "PartyScreen.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\PartyScreen.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Battle\\PartyScreen.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\PartyScreen.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Battle\\PartyScreen.cs",
-              "ViewState": "AQIAADwAAAAAAAAAAAAmwFsAAAAAAAAA",
+              "Title": "Character.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Character\\Character.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Character\\Character.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Character\\Character.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Character\\Character.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAiwAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:20:05.482Z"
+              "WhenOpened": "2024-11-17T04:28:53.298Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "PartyMemberUI.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\PartyMemberUI.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Battle\\PartyMemberUI.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Battle\\PartyMemberUI.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Battle\\PartyMemberUI.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAvAAAA",
+              "DocumentIndex": 1,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAhwGUAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:19:04.08Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "InventoryUI.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Inventory\\UI\\InventoryUI.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Inventory\\UI\\InventoryUI.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Desktop\\cs-4555-game\\Shared Spirits\\Assets\\Scripts\\Inventory\\UI\\InventoryUI.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Inventory\\UI\\InventoryUI.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAjwBYAAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T02:15:08.507Z"
+              "WhenOpened": "2024-11-17T04:28:36.745Z"
             }
           ]
         }

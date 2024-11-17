@@ -160,16 +160,13 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        if (selectedCategory == (int)ItemCategory.Pokeballs)
+        if (selectedCategory == (int)ItemCategory.Shards)
         {
             StartCoroutine(UseItem());
         }
         else
         {
             OpenPartyScreen();
-
-            if (item is TmItem)
-                partyScreen.ShowIfTmIsUsable(item as TmItem);
         }
     }
 
@@ -183,21 +180,7 @@ public class InventoryUI : MonoBehaviour
         var pokemon = partyScreen.SelectedMember;
 
         // Handle Evolution Items
-        if (item is EvolutionItem)
-        {
-            var evolution = pokemon.CheckForEvolution(item);
-            if (evolution != null)
-            {
-                yield return EvolutionManager.i.Evolve(pokemon, evolution);
-            }
-            else
-            {
-                yield return DialogManager.Instance.ShowDialogText($"It won't have any affect!");
-                ClosePartyScreen();
-                yield break;
-            }
-        }
-
+        
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if (usedItem != null)
         {
@@ -217,34 +200,34 @@ public class InventoryUI : MonoBehaviour
 
     IEnumerator HandleTmItems()
     {
-        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as TmItem;
+        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as LearnableMoveItem;
         if (tmItem == null)
             yield break;
 
-        var pokemon = partyScreen.SelectedMember;
+        var spirit = partyScreen.SelectedMember;
 
-        if (pokemon.HasMove(tmItem.Move))
+        if (spirit.HasMove(tmItem.Move))
         {
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} already know {tmItem.Move.Name}");
+            yield return DialogManager.Instance.ShowDialogText($"{spirit.Base.Name} already know {tmItem.Move.Name}");
             yield break;
         }
 
-        if (!tmItem.CanBeTaught(pokemon))
+        if (!tmItem.CanBeTaught(spirit))
         {
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} can't learn {tmItem.Move.Name}");
+            yield return DialogManager.Instance.ShowDialogText($"{spirit.Base.Name} can't learn {tmItem.Move.Name}");
             yield break;
         }
 
-        if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
+        if (spirit.Moves.Count < SpiritBase.MaxNumOfMoves)
         {
-            pokemon.LearnMove(tmItem.Move);
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} learned {tmItem.Move.Name}");
+            spirit.LearnMove(tmItem.Move);
+            yield return DialogManager.Instance.ShowDialogText($"{spirit.Base.Name} learned {tmItem.Move.Name}");
         }
         else
         {
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} is trying to learn {tmItem.Move.Name}");
-            yield return DialogManager.Instance.ShowDialogText($"But it cannot learn more than {PokemonBase.MaxNumOfMoves} moves");
-            yield return ChooseMoveToForget(pokemon, tmItem.Move);
+            yield return DialogManager.Instance.ShowDialogText($"{spirit.Base.Name} is trying to learn {tmItem.Move.Name}");
+            yield return DialogManager.Instance.ShowDialogText($"But it cannot learn more than {SpiritBase.MaxNumOfMoves} moves");
+            yield return ChooseMoveToForget(spirit, tmItem.Move);
             yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
         }
     }
@@ -254,7 +237,7 @@ public class InventoryUI : MonoBehaviour
         state = InventoryUIState.Busy;
         yield return DialogManager.Instance.ShowDialogText($"Choose a move you wan't to forget", true, false);
         moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.Base).ToList(), newMove);
+        moveSelectionUI.SetMoveData(spirit.Moves.Select(x => x.Base).ToList(), newMove);
         moveToLearn = newMove;
 
         state = InventoryUIState.MoveToForget;
@@ -269,7 +252,7 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < slotUIList.Count; i++)
         {
             if (i == selectedItem)
-                slotUIList[i].NameText.color = GlobalSettings.i.HighlightedColor;
+                slotUIList[i].NameText.color = Color.red;
             else
                 slotUIList[i].NameText.color = Color.black;
         }
@@ -325,22 +308,22 @@ public class InventoryUI : MonoBehaviour
 
     IEnumerator OnMoveToForgetSelected(int moveIndex)
     {
-        var pokemon = partyScreen.SelectedMember;
+        var spirit = partyScreen.SelectedMember;
 
         DialogManager.Instance.CloseDialog();
         moveSelectionUI.gameObject.SetActive(false);
-        if (moveIndex == PokemonBase.MaxNumOfMoves)
+        if (moveIndex == SpiritBase.MaxNumOfMoves)
         {
             // Don't learn the new move
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} did not learn {moveToLearn.Name}");
+            yield return DialogManager.Instance.ShowDialogText($"{spirit.Base.Name} did not learn {moveToLearn.Name}");
         }
         else
         {
             // Forget the selected move and learn new move
-            var selectedMove = pokemon.Moves[moveIndex].Base;
-            yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} forgot {selectedMove.Name} and learned {moveToLearn.Name}");
+            var selectedMove = spirit.Moves[moveIndex].Base;
+            yield return DialogManager.Instance.ShowDialogText($"{spirit.Base.Name} forgot {selectedMove.Name} and learned {moveToLearn.Name}");
 
-            pokemon.Moves[moveIndex] = new Move(moveToLearn);
+            spirit.Moves[moveIndex] = new Move(moveToLearn);
         }
 
         moveToLearn = null;

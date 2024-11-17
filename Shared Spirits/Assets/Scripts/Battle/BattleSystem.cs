@@ -17,7 +17,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] Image playerImage;
     [SerializeField] Image trainerImage;
-    [SerializeField] GameObject pokeballSprite;
+    //[SerializeField] GameObject shardSprite;
     [SerializeField] MoveSelectionUI moveSelectionUI;
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] GameObject singleBattleElements;
@@ -42,12 +42,12 @@ public class BattleSystem : MonoBehaviour
     bool aboutToUseChoice = true;
 
     SpiritParty playerParty;
-    SpiritParty trainerParty;
+    SpiritParty handlerParty;
     Spirit wildSpirit;
 
-    bool isTrainerBattle = false;
+    bool isHandlerBattle = false;
     PlayerController player;
-    HandlerController trainer;
+    HandlerController handler;
 
     int escapeAttempts;
     MoveBase moveToLearn;
@@ -60,21 +60,21 @@ public class BattleSystem : MonoBehaviour
         this.playerParty = playerParty;
         this.wildSpirit = wildSpirit;
         player = playerParty.GetComponent<PlayerController>();
-        isTrainerBattle = false;
+        isHandlerBattle = false;
         unitCount = 1;
 
         StartCoroutine(SetupBattle());
     }
 
-    public void StartTrainerBattle(SpiritParty playerParty, SpiritParty trainerParty,
+    public void StartHandlerBattle(SpiritParty playerParty, SpiritParty handlerParty,
         int unitCount = 2)
     {
         this.playerParty = playerParty;
-        this.trainerParty = trainerParty;
+        this.handlerParty = handlerParty;
 
-        isTrainerBattle = true;
+        isHandlerBattle = true;
         player = playerParty.GetComponent<PlayerController>();
-        trainer = trainerParty.GetComponent<HandlerController>();
+        handler = handlerParty.GetComponent<HandlerController>();
 
         this.unitCount = unitCount;
 
@@ -104,36 +104,17 @@ public class BattleSystem : MonoBehaviour
             enemyUnits[i].Clear();
         }
 
-        if (!isTrainerBattle)
+        if (!isHandlerBattle)
         {
-            // Wild Spirit Battle
-            playerUnits[0].Setup(playerParty.GetHealthySpirit());
-            enemyUnits[0].Setup(wildSpirit);
-
-            dialogBox.SetMoveNames(playerUnits[0].Spirit.Moves);
             yield return dialogBox.TypeDialog($"A wild {enemyUnits[0].Spirit.Base.Name} appeared.");
         }
         else
         {
-            // Trianer Battle
 
-            // Show trainer and player sprites
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                playerUnits[i].gameObject.SetActive(false);
-                enemyUnits[i].gameObject.SetActive(false);
-            }
+            yield return dialogBox.TypeDialog($"{handler.Name} wants to battle");
 
-            playerImage.gameObject.SetActive(true);
-            trainerImage.gameObject.SetActive(true);
-            playerImage.sprite = player.Sprite;
-            trainerImage.sprite = trainer.Sprite;
 
-            yield return dialogBox.TypeDialog($"{trainer.Name} wants to battle");
-
-            // Send out first Spirit of the trainer
-            trainerImage.gameObject.SetActive(false);
-            var enemySpirits = trainerParty.GetHealthySpirits(unitCount);
+            var enemySpirits = handlerParty.GetHealthySpirit(unitCount);
 
             for (int i = 0; i < unitCount; i++)
             {
@@ -142,11 +123,11 @@ public class BattleSystem : MonoBehaviour
             }
 
             string names = String.Join(" and ", enemySpirits.Select(p => p.Base.Name));
-            yield return dialogBox.TypeDialog($"{trainer.Name} send out {names}");
+            yield return dialogBox.TypeDialog($"{handler.Name} send out {names}");
 
             // Send out first Spirit of the player
             playerImage.gameObject.SetActive(false);
-            var playerSpirits = playerParty.GetHealthySpirits(unitCount);
+            var playerSpirits = playerParty.GetHealthySpirit(unitCount);
 
             for (int i = 0; i < unitCount; i++)
             {
@@ -214,15 +195,6 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.TargetSelection;
         currentTarget = 0;
-    }
-
-    IEnumerator AboutToUse(Spirit newSpirit)
-    {
-        state = BattleState.Busy;
-        yield return dialogBox.TypeDialog($"{trainer.Name} is about to use {newSpirit.Base.Name}. Do you want to change Spirit?");
-
-        state = BattleState.AboutToUse;
-        dialogBox.EnableChoiceBox(true);
     }
 
     IEnumerator ChooseMoveToForget(Spirit Spirit, MoveBase newMove)
@@ -325,9 +297,7 @@ public class BattleSystem : MonoBehaviour
         if (CheckIfMoveHits(move, sourceUnit.Spirit, targetUnit.Spirit))
         {
 
-            sourceUnit.PlayAttackAnimation();
-            yield return new WaitForSeconds(1f);
-            targetUnit.PlayHitAnimation();
+            
 
             if (move.Base.Category == MoveCategory.Status)
             {
@@ -442,7 +412,6 @@ public class BattleSystem : MonoBehaviour
     IEnumerator HandleSpiritFainted(BattleUnit faintedUnit)
     {
         yield return dialogBox.TypeDialog($"{faintedUnit.Spirit.Base.Name} Fainted");
-        faintedUnit.PlayFaintAnimation();
         yield return new WaitForSeconds(2f);
 
         yield return HandleExpGain(faintedUnit);
@@ -457,9 +426,9 @@ public class BattleSystem : MonoBehaviour
             // Exp Gain
             int expYield = faintedUnit.Spirit.Base.ExpYield;
             int enemyLevel = faintedUnit.Spirit.Level;
-            float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
+            
 
-            int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / (7 * unitCount));
+            int expGain = Mathf.FloorToInt((expYield * enemyLevel) / (7 * unitCount));
 
             for (int i = 0; i < unitCount; i++)
             {
@@ -515,7 +484,7 @@ public class BattleSystem : MonoBehaviour
         if (faintedUnit.IsPlayerUnit)
         {
             var activeSpirits = playerUnits.Select(u => u.Spirit).Where(p => p.HP > 0).ToList();
-            var nextSpirit = playerParty.GetHealthySpirit(activeSpirits);
+            var nextSpirit = playerParty.GetHealthySpirits(activeSpirits);
 
             if (activeSpirits.Count == 0 && nextSpirit == null)
             {
@@ -540,14 +509,14 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            if (!isTrainerBattle)
+            if (!isHandlerBattle)
             {
                 BattleOver(true);
                 return;
             }
 
             var activeSpirits = enemyUnits.Select(u => u.Spirit).Where(p => p.HP > 0).ToList();
-            var nextSpirit = trainerParty.GetHealthySpirit(activeSpirits);
+            var nextSpirit = handlerParty.GetHealthySpirits(activeSpirits);
 
             if (activeSpirits.Count == 0 && nextSpirit == null)
             {
@@ -557,11 +526,7 @@ public class BattleSystem : MonoBehaviour
             {
                 // Send out next Spirit
                 unitToSwitch = faintedUnit;
-
-                if (unitCount == 1)
-                    StartCoroutine(AboutToUse(nextSpirit));
-                else
-                    StartCoroutine(SendNextTrainerSpirit());
+                StartCoroutine(SendNextHandlerSpirit());
             }
             else if (nextSpirit == null && activeSpirits.Count > 0)
             {
@@ -576,7 +541,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    IEnumerator ShowDamageDetails(DamageDetails damageDetails)
+     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
     {
         if (damageDetails.Critical > 1f)
             yield return dialogBox.TypeDialog("A critical hit!");
@@ -607,7 +572,7 @@ public class BattleSystem : MonoBehaviour
         }
         else if (state == BattleState.Bag)
         {
-            Action onBack = () =>
+            /*Action onBack = () =>
             {
                 inventoryUI.gameObject.SetActive(false);
                 state = BattleState.ActionSelection;
@@ -617,8 +582,8 @@ public class BattleSystem : MonoBehaviour
             {
                 StartCoroutine(OnItemUsed(usedItem));
             };
-
-            inventoryUI.HandleUpdate(onBack, onItemUsed);
+            
+            inventoryUI.HandleUpdate(onBack, onItemUsed); */
         }
         else if (state == BattleState.AboutToUse)
         {
@@ -829,7 +794,7 @@ public class BattleSystem : MonoBehaviour
 
             if (partyScreen.CalledFrom == BattleState.AboutToUse)
             {
-                StartCoroutine(SendNextTrainerSpirit());
+                StartCoroutine(SendNextHandlerSpirit());
             }
             else
                 ActionSelection(actionIndex);
@@ -858,22 +823,22 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 // No Option
-                StartCoroutine(SendNextTrainerSpirit());
+                StartCoroutine(SendNextHandlerSpirit());
             }
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             dialogBox.EnableChoiceBox(false);
-            StartCoroutine(SendNextTrainerSpirit());
+            StartCoroutine(SendNextHandlerSpirit());
         }
     }
 
-    IEnumerator SwitchSpirit(BattleUnit unitToSwitch, Spirit newSpirit, bool isTrainerAboutToUse = false)
+    IEnumerator SwitchSpirit(BattleUnit unitToSwitch, Spirit newSpirit, bool isHandlerAboutToUse = false)
     {
         if (unitToSwitch.Spirit.HP > 0)
         {
             yield return dialogBox.TypeDialog($"Come back {unitToSwitch.Spirit.Base.Name}");
-            unitToSwitch.PlayFaintAnimation();
+            //unitToSwitch.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
 
@@ -881,34 +846,34 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(newSpirit.Moves);
         yield return dialogBox.TypeDialog($"Go {newSpirit.Base.Name}!");
 
-        if (isTrainerAboutToUse)
-            StartCoroutine(SendNextTrainerSpirit());
+        if (isHandlerAboutToUse)
+            StartCoroutine(SendNextHandlerSpirit());
         else
             state = BattleState.RunningTurn;
     }
 
-    IEnumerator SendNextTrainerSpirit()
+    IEnumerator SendNextHandlerSpirit()
     {
         state = BattleState.Busy;
 
         var faintedUnit = enemyUnits.First(u => u.Spirit.HP == 0);
 
         var activeSpirits = enemyUnits.Select(u => u.Spirit).Where(p => p.HP > 0).ToList();
-        var nextSpirit = trainerParty.GetHealthySpirit(activeSpirits);
+        var nextSpirit = handlerParty.GetHealthySpirits(activeSpirits);
         faintedUnit.Setup(nextSpirit);
-        yield return dialogBox.TypeDialog($"{trainer.Name} send out {nextSpirit.Base.Name}!");
+        yield return dialogBox.TypeDialog($"{handler.Name} send out {nextSpirit.Base.Name}!");
 
         state = BattleState.RunningTurn;
     }
 
-    IEnumerator OnItemUsed(ItemBase usedItem)
+    /*IEnumerator OnItemUsed(ItemBase usedItem)
     {
         state = BattleState.Busy;
         inventoryUI.gameObject.SetActive(false);
 
         if (usedItem is ShardItem)
         {
-            yield return ThrowPokeball((ShardItem)usedItem);
+            yield return;
         }
 
         var action = new BattleAction()
@@ -917,96 +882,14 @@ public class BattleSystem : MonoBehaviour
             User = currentUnit
         };
         AddBattleAction(action);
-    }
+    }*/
 
-    IEnumerator ThrowPokeball(ShardItem shardItem)
-    {
-        state = BattleState.Busy;
-
-        if (isTrainerBattle)
-        {
-            yield return dialogBox.TypeDialog($"You can't steal the trainers Spirit!");
-            state = BattleState.RunningTurn;
-            yield break;
-        }
-
-        var playerUnit = playerUnits[0];
-        var enemyUnit = enemyUnits[0];
-
-        yield return dialogBox.TypeDialog($"{player.Name} used {shardItem.Name.ToUpper()}!");
-
-        var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(2, 0), Quaternion.identity);
-        var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
-        pokeball.sprite = shardItem.Icon;
-
-        // Animations
-        yield return pokeball.transform.DOJump(enemyUnit.transform.position + new Vector3(0, 2), 2f, 1, 1f).WaitForCompletion();
-        yield return enemyUnit.PlayCaptureAnimation();
-        yield return pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 1.3f, 0.5f).WaitForCompletion();
-
-        int shakeCount = TryToCatchSpirit(enemyUnit.Spirit, shardItem);
-
-        for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
-        {
-            yield return new WaitForSeconds(0.5f);
-            yield return pokeball.transform.DOPunchRotation(new Vector3(0, 0, 10f), 0.8f).WaitForCompletion();
-        }
-
-        if (shakeCount == 4)
-        {
-            // Spirit is caught
-            yield return dialogBox.TypeDialog($"{enemyUnit.Spirit.Base.Name} was caught");
-            yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
-
-            playerParty.AddSpirit(enemyUnit.Spirit);
-            yield return dialogBox.TypeDialog($"{enemyUnit.Spirit.Base.Name} has been added to your party");
-
-            Destroy(pokeball);
-            BattleOver(true);
-        }
-        else
-        {
-            // Spirit broke out
-            yield return new WaitForSeconds(1f);
-            pokeball.DOFade(0, 0.2f);
-            yield return enemyUnit.PlayBreakOutAnimation();
-
-            if (shakeCount < 2)
-                yield return dialogBox.TypeDialog($"{enemyUnit.Spirit.Base.Name} broke free");
-            else
-                yield return dialogBox.TypeDialog($"Almost caught it");
-
-            Destroy(pokeball);
-            state = BattleState.RunningTurn;
-        }
-    }
-
-    int TryToCatchSpirit(Spirit Spirit, ShardItem shardItem)
-    {
-        float a = (3 * Spirit.MaxHp - 2 * Spirit.HP) * Spirit.Base.CatchRate * shardItem.CatchRateModifier * ConditionsDB.GetStatusBonus(Spirit.Status) / (3 * Spirit.MaxHp);
-
-        if (a >= 255)
-            return 4;
-
-        float b = 1048560 / Mathf.Sqrt(Mathf.Sqrt(16711680 / a));
-
-        int shakeCount = 0;
-        while (shakeCount < 4)
-        {
-            if (UnityEngine.Random.Range(0, 65535) >= b)
-                break;
-
-            ++shakeCount;
-        }
-
-        return shakeCount;
-    }
 
     IEnumerator TryToEscape()
     {
         state = BattleState.Busy;
 
-        if (isTrainerBattle)
+        if (isHandlerBattle)
         {
             yield return dialogBox.TypeDialog($"You can't run from trainer battles!");
             state = BattleState.RunningTurn;

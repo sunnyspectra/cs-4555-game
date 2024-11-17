@@ -25,7 +25,7 @@ public class BattleDialogBox : MonoBehaviour
     Color highlightedColor;
     private void Start()
     {
-        highlightedColor = GlobalSettings.i.HighlightedColor;
+        //highlightedColor = GlobalSettings.i.HighlightedColor;
     }
 
     public void SetDialog(string dialog)

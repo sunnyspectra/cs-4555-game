@@ -19,26 +19,23 @@ public class SpiritBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
-
+    [SerializeField] int expYield;
     [SerializeField] List<LearnableMove> learnableMoves;
     [SerializeField] List<MoveBase> learnableByItems;
 
     public static int MaxNumOfMoves { get; set; } = 4;
 
+    public int GetExpForLevel(int level)
+    {
+        return level * level * level;
+    }
+
     public string Name {
         get { return name; }
     }
 
-    public string Description {
-        get { return description; }
-    }
-
-    public Sprite FrontSprite {
-        get { return frontSprite; }
-    }
-
-    public Sprite BackSprite {
-        get { return backSprite; }
+    public Sprite Sprite {
+        get { return sprite; }
     }
 
     public SpiritType Type1 {
@@ -78,7 +75,9 @@ public class SpiritBase : ScriptableObject
     }
 
     public List<MoveBase> LearnableByItems => learnableByItems;
-    
+
+    public int ExpYield => expYield;
+
 
 }
 

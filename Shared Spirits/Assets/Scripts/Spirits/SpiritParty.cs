@@ -34,9 +34,18 @@ public class SpiritParty : MonoBehaviour
 
     }
 
-    public Spirit GetHealthySpirit()
+    public Spirit GetHealthySpirits(List<Spirit> dontInclude = null)
     {
-        return spirits.Where(x => x.HP > 0).FirstOrDefault();
+        var healthySpirits = spirits.Where(x => x.HP > 0);
+        if (dontInclude != null)
+            healthySpirits = healthySpirits.Where(p => !dontInclude.Contains(p));
+
+        return healthySpirits.FirstOrDefault();
+    }
+
+    public List<Spirit> GetHealthySpirit(int unitCount)
+    {
+        return spirits.Where(x => x.HP > 0).Take(unitCount).ToList();
     }
 
     public void AddSpirit(Spirit newSpirit)
@@ -49,23 +58,6 @@ public class SpiritParty : MonoBehaviour
         else
         {
             
-        }
-    }
-
-    public bool CheckForEvolutions()
-    {
-        return spirits.Any(p => p.CheckForEvolution() != null);
-    }
-
-    public IEnumerator RunEvolutions()
-    {
-        foreach (var spirit in spirits)
-        {
-            var evoution = spirit.CheckForEvolution();
-            if (evoution != null)
-            {
-                yield return EvolutionManager.i.Evolve(spirit, evoution);
-            }
         }
     }
 

@@ -28,7 +28,7 @@ public class MoveSelectionUI : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.UpArrow))
             --currentSelection;
 
-        currentSelection = Mathf.Clamp(currentSelection, 0, PokemonBase.MaxNumOfMoves);
+        currentSelection = Mathf.Clamp(currentSelection, 0, SpiritBase.MaxNumOfMoves);
 
         UpdateMoveSelection(currentSelection);
 
@@ -38,7 +38,7 @@ public class MoveSelectionUI : MonoBehaviour
 
     public void UpdateMoveSelection(int selection)
     {
-        for (int i = 0; i < PokemonBase.MaxNumOfMoves + 1; i++)
+        for (int i = 0; i < SpiritBase.MaxNumOfMoves + 1; i++)
         {
             if (i == selection)
                 moveTexts[i].color = highlightedColor;

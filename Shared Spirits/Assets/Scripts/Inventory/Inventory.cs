@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemCategory { Items, Pokeballs, Tms }
+public enum ItemCategory { Items, Shards, LearnableMoves }
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] List<ItemSlot> slots;
-    [SerializeField] List<ItemSlot> pokeballSlots;
-    [SerializeField] List<ItemSlot> tmSlots;
+    [SerializeField] List<ItemSlot> shardSlots;
+    [SerializeField] List<ItemSlot> learnableMoveSlots;
 
     List<List<ItemSlot>> allSlots;
 
@@ -18,12 +18,12 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>>() { slots, shardSlots, learnableMoveSlots };
     }
 
     public static List<string> ItemCategories { get; set; } = new List<string>()
     {
-        "ITEMS", "POKEBALLS", "TMs & HMs"
+        "Items", "Shards", "Learnable Moves"
     };
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
@@ -115,12 +115,12 @@ public class Inventory : MonoBehaviour
 
     ItemCategory GetCategoryFromItem(ItemBase item)
     {
-        if (item is RecoveryItem || item is EvolutionItem)
+        if (item is RecoveryItem)
             return ItemCategory.Items;
         else if (item is Shard)
-            return ItemCategory.Shard;
+            return ItemCategory.Shards;
         else
-            return ItemCategory.Tms;
+            return ItemCategory.LearnableMoves;
     }
 
     public static Inventory GetInventory()
@@ -133,8 +133,8 @@ public class Inventory : MonoBehaviour
         var saveData = new InventorySaveData()
         {
             items = slots.Select(i => i.GetSaveData()).ToList(),
-            pokeballs = pokeballSlots.Select(i => i.GetSaveData()).ToList(),
-            tms = tmSlots.Select(i => i.GetSaveData()).ToList(),
+            shards = shardSlots.Select(i => i.GetSaveData()).ToList(),
+            learnableMoves = learnableMoveSlots.Select(i => i.GetSaveData()).ToList(),
         };
 
         return saveData;
@@ -145,10 +145,10 @@ public class Inventory : MonoBehaviour
         var saveData = state as InventorySaveData;
 
         slots = saveData.items.Select(i => new ItemSlot(i)).ToList();
-        pokeballSlots = saveData.pokeballs.Select(i => new ItemSlot(i)).ToList();
-        tmSlots = saveData.tms.Select(i => new ItemSlot(i)).ToList();
+        shardSlots = saveData.shards.Select(i => new ItemSlot(i)).ToList();
+        learnableMoveSlots = saveData.learnableMoves.Select(i => new ItemSlot(i)).ToList();
 
-        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>>() { slots, shardSlots, learnableMoveSlots };
 
         OnUpdated?.Invoke();
     }
@@ -203,6 +203,6 @@ public class ItemSaveData
 public class InventorySaveData
 {
     public List<ItemSaveData> items;
-    public List<ItemSaveData> pokeballs;
-    public List<ItemSaveData> tms;
+    public List<ItemSaveData> shards;
+    public List<ItemSaveData> learnableMoves;
 }

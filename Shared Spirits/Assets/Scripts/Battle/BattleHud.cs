@@ -83,7 +83,7 @@ public class BattleHud : MonoBehaviour
             expBar.transform.localScale = new Vector3(0, 1, 1);
 
         float normalizedExp = GetNormalizedExp();
-        yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
+        //yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
     }
 
     float GetNormalizedExp()

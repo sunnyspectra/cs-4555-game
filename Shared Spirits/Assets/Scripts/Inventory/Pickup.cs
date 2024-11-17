@@ -16,14 +16,11 @@ public class Pickup : MonoBehaviour
 
             Used = true;
 
-            AudioManager.i.PlaySfx(AudioId.ItemObtained, pauseMusic: true);
-
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
 
-            string playerName = initiator.GetComponent<PlayerController>().Name;
 
-            yield return DialogManager.Instance.ShowDialogText($"{playerName} found {item.Name}");
+            yield return DialogManager.Instance.ShowDialogText($"You found {item.Name}");
         }
     }
 

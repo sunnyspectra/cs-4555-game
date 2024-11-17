@@ -14,7 +14,7 @@ public class PartyScreen : MonoBehaviour
 
     int selection = 0;
 
-    public Spirit SelectedMember => spiritss[selection];
+    public Spirit SelectedMember => spirits[selection];
 
     /// <summary>
     /// Party screen can be called from different states like ActionSelection, RunningTurn, AboutToUse
@@ -37,10 +37,10 @@ public class PartyScreen : MonoBehaviour
 
         for (int i = 0; i < memberSlots.Length; i++)
         {
-            if (i < pokemons.Count)
+            if (i < spirits.Count)
             {
                 memberSlots[i].gameObject.SetActive(true);
-                memberSlots[i].Init(pokemons[i]);
+                memberSlots[i].Init(spirits[i]);
             }
             else
                 memberSlots[i].gameObject.SetActive(false);

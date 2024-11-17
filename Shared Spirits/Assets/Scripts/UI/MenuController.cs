@@ -63,7 +63,7 @@ public class MenuController : MonoBehaviour
         for (int i = 0; i < menuItems.Count; i++)
         {
             if (i == selectedItem)
-                menuItems[i].color = GlobalSettings.i.HighlightedColor;
+                menuItems[i].color = Color.red;
             else
                 menuItems[i].color = Color.black;
         }
