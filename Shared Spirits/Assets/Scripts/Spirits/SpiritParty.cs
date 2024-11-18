@@ -12,10 +12,12 @@ public class SpiritParty : MonoBehaviour
 
     public List<Spirit> Spirits
     {
-        get {
+        get
+        {
             return spirits;
         }
-        set {
+        set
+        {
             spirits = value;
             OnUpdated?.Invoke();
         }
@@ -43,6 +45,11 @@ public class SpiritParty : MonoBehaviour
         return healthySpirits.FirstOrDefault();
     }
 
+    public Spirit GetHealthySpirit()
+    {
+        return spirits.Where(x => x.HP > 0).FirstOrDefault();
+    }
+
     public List<Spirit> GetHealthySpirit(int unitCount)
     {
         return spirits.Where(x => x.HP > 0).Take(unitCount).ToList();
@@ -57,7 +64,7 @@ public class SpiritParty : MonoBehaviour
         }
         else
         {
-            
+
         }
     }
 
