@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
     [SerializeField] PlayerController2 playerController2;
-
+    [SerializeField] Camera worldCamera;
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] InventoryUI inventoryUI;
@@ -80,7 +80,7 @@ public class GameController : MonoBehaviour
     {
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
-        //worldCamera.gameObject.SetActive(false);
+        //Player.MainCamera.gameObject.SetActive(false);
 
         //var playerParty = playerController.GetComponent<SpiritParty>();
         //var wildSpirit = CurrentScene.GetComponent<MapArea>().GetRandomWildSpirit();
@@ -98,13 +98,14 @@ public class GameController : MonoBehaviour
         Debug.Log($"Interaction runs here");
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
-        //worldCamera.gameObject.SetActive(false);
+        worldCamera.gameObject.SetActive(false);
 
         this.handler = handler;
         var playerParty = playerController.GetComponent<SpiritParty>();
+        var playerParty2 = playerController2.GetComponent<SpiritParty>();
         var handlerParty = handler.GetComponent<SpiritParty>();
 
-        battleSystem.StartHandlerBattle(playerParty, handlerParty);
+        battleSystem.StartHandlerBattle(playerParty, playerParty2, handlerParty);
     }
 
     public void OnEnterHandlersView(HandlerController handler)

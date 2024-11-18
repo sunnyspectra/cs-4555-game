@@ -2144,7 +2144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &180195601
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3286,7 +3286,7 @@ GameObject:
   - component: {fileID: 307691014}
   - component: {fileID: 307691013}
   m_Layer: 0
-  m_Name: DialogBox
+  m_Name: DialogBox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4087,6 +4087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 1085654499}
   playerController2: {fileID: 2032606014}
+  worldCamera: {fileID: 963194227}
   battleSystem: {fileID: 2051822703}
   partyScreen: {fileID: 2052222022}
   inventoryUI: {fileID: 180195602}
@@ -4127,7 +4128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7a39fd04dfb9141908bba4d1440a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogBox: {fileID: 2128425179}
+  dialogBox: {fileID: 307691011}
   dialogText: {fileID: 1503652573}
   lettersPerSecond: 45
 --- !u!1 &375352610
@@ -5015,7 +5016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &459798102
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8773,9 +8774,11 @@ MonoBehaviour:
   sprite: {fileID: 2159769904527706364, guid: 389d2366e1db64147aa81dd92ed3e4dd, type: 3}
   dialog:
     lines:
-    - nothing
+    - 4325 56
+    - 12323
   dialogAfterBattle:
     lines:
+    - nooooo
     - nooooo
   fov: {fileID: 0}
 --- !u!54 &820321686
@@ -10401,7 +10404,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14016,7 +14019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1246147058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15302,7 +15305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1365721800
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22247,6 +22250,7 @@ MonoBehaviour:
   playerUnitsMulti:
   - {fileID: 193941190}
   - {fileID: 699644296}
+  playerUnitsMulti2: []
   enemyUnitsMulti:
   - {fileID: 840155709}
   - {fileID: 948470958}
@@ -22293,7 +22297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2052222021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22887,7 +22891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2128425180
 RectTransform:
   m_ObjectHideFlags: 0

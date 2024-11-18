@@ -12,6 +12,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit playerUnitSingle;
     [SerializeField] BattleUnit enemyUnitSingle;
     [SerializeField] List<BattleUnit> playerUnitsMulti;
+    [SerializeField] List<BattleUnit> playerUnitsMulti2;
     [SerializeField] List<BattleUnit> enemyUnitsMulti;
     [SerializeField] BattleDialogBox dialogBox;
     [SerializeField] PartyScreen partyScreen;
@@ -24,6 +25,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] GameObject multiBattleElements;
 
     List<BattleUnit> playerUnits;
+    List<BattleUnit> playerUnits2;
     List<BattleUnit> enemyUnits;
 
     List<BattleAction> actions;
@@ -42,11 +44,13 @@ public class BattleSystem : MonoBehaviour
     bool aboutToUseChoice = true;
 
     SpiritParty playerParty;
+    SpiritParty playerParty2;
     SpiritParty handlerParty;
     Spirit wildSpirit;
 
     bool isHandlerBattle = false;
     PlayerController player;
+    PlayerController2 player2;
     HandlerController handler;
 
     int escapeAttempts;
@@ -66,14 +70,15 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(SetupBattle());
     }
 
-    public void StartHandlerBattle(SpiritParty playerParty, SpiritParty handlerParty,
-        int unitCount = 2)
+    public void StartHandlerBattle(SpiritParty playerParty, SpiritParty playerParty2, SpiritParty handlerParty, int unitCount = 2)
     {
         this.playerParty = playerParty;
+        this.playerParty2 = playerParty2;
         this.handlerParty = handlerParty;
 
         isHandlerBattle = true;
         player = playerParty.GetComponent<PlayerController>();
+        player2 = playerParty2.GetComponent<PlayerController2>();
         handler = handlerParty.GetComponent<HandlerController>();
 
         this.unitCount = unitCount;
@@ -84,23 +89,18 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator SetupBattle()
     {
         // Setup Battle Elements
-        singleBattleElements.SetActive(unitCount == 1);
         multiBattleElements.SetActive(unitCount > 1);
 
-        if (unitCount == 1)
-        {
-            playerUnits = new List<BattleUnit>() { playerUnitSingle };
-            enemyUnits = new List<BattleUnit>() { enemyUnitSingle };
-        }
-        else
-        {
+        
+       
             playerUnits = playerUnitsMulti;
             enemyUnits = enemyUnitsMulti;
-        }
+        
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
             playerUnits[i].Clear();
+            playerUnits2[i].Clear();
             enemyUnits[i].Clear();
         }
 

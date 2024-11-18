@@ -31,12 +31,12 @@ public class HandlerController : MonoBehaviour, Interactable
     public IEnumerator Interact(Transform initiator)
     {
         //character.LookTowards(initiator.position);
-        Debug.Log($"Interaction");
+        Debug.Log($"Interaction1");
         if (!battleLost)
         {
             yield return DialogManager.Instance.ShowDialog(dialog);
 
-            Debug.Log($"Interaction");
+            Debug.Log($"Interaction2");
             GameController.Instance.StartHandlerBattle(this);
 
             Debug.Log($"Interaction finished");
