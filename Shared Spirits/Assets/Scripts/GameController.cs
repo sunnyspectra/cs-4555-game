@@ -93,7 +93,6 @@ public class GameController : MonoBehaviour
     HandlerController handler;
     public void StartHandlerBattle(HandlerController handler)
     {
-        //this is where it freezes
 
         Debug.Log($"Interaction runs here");
         state = GameState.Battle;

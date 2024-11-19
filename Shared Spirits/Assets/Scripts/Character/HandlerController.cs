@@ -30,7 +30,6 @@ public class HandlerController : MonoBehaviour, Interactable
 
     public IEnumerator Interact(Transform initiator)
     {
-        //character.LookTowards(initiator.position);
         Debug.Log($"Interaction1");
         if (!battleLost)
         {

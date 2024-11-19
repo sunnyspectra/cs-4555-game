@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bob
   m_EditorClassIdentifier: 
   name: Bob
-  sprite: {fileID: -5039849933319328101, guid: 389d2366e1db64147aa81dd92ed3e4dd, type: 3}
+  sprite: {fileID: 21300000, guid: 53831ffd2c1064d07b3fcc10982b1e0d, type: 3}
   type1: 2
   type2: 1
   maxHp: 40

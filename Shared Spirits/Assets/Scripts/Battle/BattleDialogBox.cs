@@ -16,7 +16,6 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] List<Text> actionTexts;
     [SerializeField] List<Text> moveTexts;
     
-    [SerializeField] Text ppText;
     [SerializeField] Text typeText;
 
     [SerializeField] Text yesText;
@@ -87,13 +86,8 @@ public class BattleDialogBox : MonoBehaviour
                 moveTexts[i].color = Color.black;
         }
 
-        ppText.text = $"PP {move.PP}/{move.Base.PP}";
         typeText.text = move.Base.Type.ToString();
 
-        if (move.PP == 0)
-            ppText.color = Color.red;
-        else
-            ppText.color = Color.black;
     }
 
     public void SetMoveNames(List<Move> moves)
